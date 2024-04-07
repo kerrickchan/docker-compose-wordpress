@@ -1,0 +1,18 @@
+version: '3.8'
+
+name: wordpress
+
+services:
+  wordpress:
+    extends:
+      file: ./docker-compose-wordpress.yml
+      service: wordpress
+
+  db:
+    extends:
+      file: ./docker-compose-wordpress.yml
+      service: db
+
+volumes:
+  wordpress:
+  db:
