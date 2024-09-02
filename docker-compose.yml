@@ -1,5 +1,3 @@
-version: '3.8'
-
 name: wordpress
 
 services:
@@ -7,6 +5,9 @@ services:
     extends:
       file: ./docker-compose-wordpress.yml
       service: wordpress
+    environment:
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_ENVIRONMENT_TYPE', 'local');
 
   db:
     extends:
