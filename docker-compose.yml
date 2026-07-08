@@ -1,0 +1,28 @@
+services:
+  wordpress:
+    image: wordpress:latest
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: '${DB_NAME:-wordpress}'
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: '${DB_ROOT_PASSWORD:-root}'
+    depends_on:
+      - db
+    links:
+      - db
+    ports:
+      - '${PORT:-8080}:80'
+    restart: unless-stopped # Restart the container unless it is explicitly stopped
+    pull_policy: always # Pull the latest image on every start
+
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_ROOT_PASSWORD:-root}'
+      MYSQL_DATABASE: '${DB_NAME:-wordpress}'
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: unless-stopped # Restart the container unless it is explicitly stopped
+
+volumes:
+  db_data:
